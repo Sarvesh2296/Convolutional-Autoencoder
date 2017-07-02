@@ -18,76 +18,76 @@ def encoder(image):
 	print('Encoder')
 	print(image.shape)
 	input = slim.convolution2d(image, 3, [3,3],
-	                            stride=[1,1],
-	                            padding='SAME',
-		                        weights_initializer = intitializer,
-		                        activation_fn = lrelu,
-		                        scope = 'en_conv1')
+	                           stride=[1,1],
+	                           padding='SAME',
+		                   weights_initializer = intitializer,
+		                   activation_fn = lrelu,
+		                   scope = 'en_conv1')
 	print(input.shape)
 	net = slim.convolution2d(input, 64, [3,3],
-								stride=[2,2],
-								padding='SAME',
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'en_conv2')
+				stride=[2,2],
+				padding='SAME',
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'en_conv2')
 	print(net.shape)
 	net = slim.convolution2d(net, 128, [3,3],
-								stride = [2,2],
-								padding = 'SAME',
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'en_conv3')
+				stride = [2,2],
+				padding = 'SAME',
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'en_conv3')
 	print(net.shape)
 	net = slim.convolution2d(net, 128, [3,3],
-								stride = [1,1],
-								padding = 'SAME',
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'en_conv4')
+				stride = [1,1],
+				padding = 'SAME',
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'en_conv4')
 	print(net.shape)
 	net = slim.fully_connected(slim.flatten(net), intermediate_dim,
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'en_flat1')
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'en_flat1')
 	print(net.shape)
 	latent = slim.fully_connected(net, latent_dim,
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'en_latent')
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'en_latent')
 	print(latent.shape)
 	return latent
 
 def decoder(z):
 	print('Decoder')
 	input = slim.fully_connected(z, intermediate_dim,
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'de_intermediate')
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'de_intermediate')
 	print(input.shape)
 	net = slim.fully_connected(input, 64*64*128,
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'de_flat2')
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'de_flat2')
 	print(net.shape)
 	net = tf.reshape(net, [1, 64, 64, 128])
 	print(net.shape)
 	net = slim.convolution2d_transpose(net, 128, [3,3],
-								stride = [1,1],
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'de_deconv1')
+				stride = [1,1],
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'de_deconv1')
 	print(net.shape)
 	net = slim.convolution2d_transpose(net, 64, [3,3],
-								stride = [2,2],
-								weights_initializer = intitializer,
-								activation_fn = lrelu,
-								scope = 'de_deconv2')
+				stride = [2,2],
+				weights_initializer = intitializer,
+				activation_fn = lrelu,
+				scope = 'de_deconv2')
 	print(net.shape)
 	output = slim.convolution2d_transpose(net, 3, [3,3],
-								stride = [2,2],
-								weights_initializer = intitializer,
-								activation_fn = tf.tanh,
-								scope = 'de_output')
+				stride = [2,2],
+				weights_initializer = intitializer,
+				activation_fn = tf.tanh,
+				scope = 'de_output')
 	print(output.shape)
 	return output
 
@@ -110,9 +110,9 @@ if not os.path.exists(checkpoints_dir):
 	os.mkdir(checkpoints_dir)
 
 slim.learning.train(train_op,
-					checkpoints_dir,
-					save_summaries_secs = 60,
-					save_interval_secs = 60)
+		checkpoints_dir,
+		save_summaries_secs = 60,
+		save_interval_secs = 60)
 
 
 	
