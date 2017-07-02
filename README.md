@@ -6,3 +6,5 @@ Adam Optimizer is used for learning.
 
 The whole code is implemented in Tensorflow slim.
 
+P.S - This is an exemplary code so it has been implemented for just 1 image. To train on a directory of images, some changes will have to be made in the utils_preprocess code.
+
